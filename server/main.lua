@@ -251,7 +251,8 @@ RegisterNetEvent('qb-banking:createBankCard', function(pin)
     end
 
     TriggerClientEvent('qb-banking:openBankScreen', src)
-    TriggerClientEvent('QBCore:Notify', src, 'You have successfully ordered a Debit Card.', 'success')
+    --TriggerClientEvent('QBCore:Notify', src, 'You have successfully ordered a Debit Card.', 'success')
+    TriggerClientEvent('okokNotify:Alert', src, 'Ordered', 'You have successfully ordered a Debit Card', 3000, 'success')
 
     TriggerEvent('qb-log:server:CreateLog', 'banking', 'Banking', 'lightgreen', "**"..GetPlayerName(xPlayer.PlayerData.source) .. " (citizenid: "..xPlayer.PlayerData.citizenid.." | id: "..xPlayer.PlayerData.source..")** successfully ordered a debit card")
 end)
@@ -370,26 +371,34 @@ QBCore.Commands.Add('givecash', 'Give cash to player.', {{name = 'id', help = 'P
 				if #(GetEntityCoords(GetPlayerPed(src)) - GetEntityCoords(GetPlayerPed(id))) < distance then
 					if xPlayer.Functions.RemoveMoney('cash', amount) then
 						if xReciv.Functions.AddMoney('cash', amount) then
-							TriggerClientEvent('QBCore:Notify', src, "Success fully gave to ID " .. tostring(id) .. ' $' .. tostring(amount) .. '.', "success")
-							TriggerClientEvent('QBCore:Notify', id, "Success recived gave $" .. tostring(amount) .. ' from ID ' .. tostring(src), "success")
+							--TriggerClientEvent('QBCore:Notify', src, "Success fully gave to ID " .. tostring(id) .. ' $' .. tostring(amount) .. '.', "success")
+							--TriggerClientEvent('QBCore:Notify', id, "Success recived gave $" .. tostring(amount) .. ' from ID ' .. tostring(src), "success")
+                            TriggerClientEvent('okokNotify:Alert', src, "Success", "Success fully gave to ID " .. tostring(id) .. ' $' .. tostring(amount) .. '.', 5000, 'success')
+                            TriggerClientEvent('okokNotify:Alert', id, 'Success', "Success recived game $" .. tostring(amount) .. ' from ID ' .. tostring(src), 5000, 'success')
 							TriggerClientEvent("payanimation", src)
 						else
-							TriggerClientEvent('QBCore:Notify', src, "Could not give item to the given id.", "error")
+							--TriggerClientEvent('QBCore:Notify', src, "Could not give item to the given id.", "error")
+                            TriggerClientEvent('okokNotify:Alert', src, 'Can\'t Give Item', "Could not give item to the given id", 3000, 'warning')
 						end
 					else
-						TriggerClientEvent('QBCore:Notify', src, "You don\'t have this amount.", "error")
+						--TriggerClientEvent('QBCore:Notify', src, "You don\'t have this amount.", "error")
+                        TriggerClientEvent('okokNotify:Alert', src, 'Not Enough', "You don\'t have this amount", 3000, 'error')
 					end
 				else
-					TriggerClientEvent('QBCore:Notify', src, "You are too far away lmfao.", "error")
+					--TriggerClientEvent('QBCore:Notify', src, "You are too far away lmfao.", "error")
+                    TriggerClientEvent('okokNotify:Alert', src, 'Too Far Away', "You are too far away lmfao", 3000, 'error')
 				end
 			else
-				TriggerClientEvent('QBCore:Notify', src, "You are dead LOL.", "error")
+				--TriggerClientEvent('QBCore:Notify', src, "You are dead LOL.", "error")
+                TriggerClientEvent('okokNotify:Alert', src, 'Dead!', "You are dead remember? LOL!", 3000, 'error')
 			end
 		else
-			TriggerClientEvent('QBCore:Notify', src, "Wrong ID.", "error")
+			--TriggerClientEvent('QBCore:Notify', src, "Wrong ID.", "error")
+            TriggerClientEvent('okokNotify:Alert', src, "Wrong ID", "That was the wrong ID, Try Again!", 3000, 'error')
 		end
 	else
-		TriggerClientEvent('QBCore:Notify', src, "Usage /givecash [ID] [AMOUNT]", "error")
+		--TriggerClientEvent('QBCore:Notify', src, "Usage /givecash [ID] [AMOUNT]", "error")
+        TriggerClientEvent('okokNotify:Alert', src, "Error!", 'Usage /givecash [ID] [AMOUNT]', 3000, 'error')
 	end
 end)
 
